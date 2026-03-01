@@ -73,17 +73,19 @@ The Central Library wants to manage book lending and cultural events.
 
 ### ER Diagram:
 
-<img width="1072" height="821" alt="WSQ1 drawio" src="https://github.com/user-attachments/assets/dcc067b6-f0c2-4e70-bb5f-deffb1764e60" />
+<img width="821" height="1101" alt="image" src="https://github.com/user-attachments/assets/1ef7e48d-745f-45d7-bb45-2f77e31f111b" />
 
 ### Entities and Attributes
 
-| Entity | Attributes (PK, FK) | Notes |
-|--------|--------------------|-------|
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
+| Entity        |         Attributes (PK, FK)         |                      Notes                           |
+|---------------|-------------------------------------|------------------------------------------------------|
+| Customer      | CustomerID(PK),Name,PhoneNumber     | Customer can reserve to eat                          |
+| Reservation   | ReservationID(PK),status            | Reservation are made by the customer                 |
+| Order         | OrderID(PK),Date&Time,Status        | Order are made by the customer after reservation     |
+| Billing       | BillID(PK),PayMethod,TotAmt,Datetime| Bill Has to be paid by the customer                  |
+| Waiter        | WaiterID(PK),Name,Salary            |  Serves the food to customer                         |
+| Dishes        | Quantity,Price                      | Dishes are made by chief                             |
+
 
 ### Relationships and Constraints
 
@@ -117,29 +119,47 @@ A popular restaurant wants to manage reservations, orders, and billing.
 
 <img width="1222" height="849" alt="Screenshot 2026-02-13 105139" src="https://github.com/user-attachments/assets/be7bbdd4-489a-4e12-a20d-af8c4ba4ae21" />
 
-
 ### Entities and Attributes
 
-| Entity | Attributes (PK, FK) | Notes |
-|--------|--------------------|-------|
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
+| Entity        |         Attributes (PK, FK)         |                      Notes                           |
+|---------------|-------------------------------------|------------------------------------------------------|
+| Customer      | CustomerID(PK),Name,PhoneNumber     | Customer can reserve to eat                          |
+| Reservation   | ReservationID(PK),status            | Reservation are made by the customer                 |
+| Order         | OrderID(PK),Date&Time,Status        | Order are made by the customer after reservation     |
+| Billing       | BillID(PK),PayMethod,TotAmt,Datetime| Bill Has to be paid by the customer                  |
+| Waiter        | WaiterID(PK),Name,Salary            |  Serves the food to customer                         |
+| Dishes        | Quantity,Price                      | Dishes are made by chief                             |
 
 ### Relationships and Constraints
 
-| Relationship | Cardinality | Participation | Notes |
-|--------------|------------|---------------|-------|
-|              |            |               |       |
-|              |            |               |       |
-|              |            |               |       |
+| Relationship                   | Cardinality                    | Participation             | Notes                                      |
+| ------------------------------ | ------------------------------ | ------------------------- | ------------------------------------------ |
+| Customer – Reservation         | 1:N                            | Total on Reservation side | One customer can make many reservations    |
+| Reservation – Table            | 1:N                            | Total on Reservation side | A table can be reserved many times         |
+| Waiter – Reservation           | 1:N                            | Total on Reservation side | A waiter can serve multiple reservations   |
+| Reservation – Order            | 1:N                            | Total on Order side       | Each reservation can place multiple orders |
+| Order – Dish (via OrderDetail) | M:N (resolved via OrderDetail) | Total on OrderDetail side | Multiple dishes per order                  |
+| Reservation – Bill             | 1:1                            | Total on both sides       | One bill per reservation                   |
 
 ### Assumptions
-- 
-- 
-- 
+
+Each Customer is uniquely identified by Customer_ID.
+
+A customer can place multiple orders, but each order belongs to one customer.
+
+A customer can make multiple reservations.
+
+Each Reservation is for one table at a specific date and time.
+
+A Table can be reserved many times, but only once at a given time.
+
+Each reservation is served by one waiter.
+
+A waiter can serve multiple reservations.
+
+Each reservation generates one bill.
+
+Each bill belongs to one reservation.
 
 ---
 
