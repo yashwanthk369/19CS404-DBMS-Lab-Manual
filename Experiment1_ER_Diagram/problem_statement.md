@@ -22,19 +22,19 @@ FlexiFit Gym wants a database to manage its members, trainers, and fitness progr
 - Payments tracked for memberships and sessions.
 
 ### ER Diagram:
+<img width="1384" height="755" alt="image" src="https://github.com/user-attachments/assets/86c84016-acf0-4644-915e-61b4b82443af" />
 
-<img width="1119" height="756" alt="Screenshot 2026-02-11 084319" src="https://github.com/user-attachments/assets/55d6f2c6-181a-436d-85e6-2c743ebe4e84" />
 
 ### Entities and Attributes
 
-| Entity  |           Attributes (PK, FK)          |              Notes                 |
-|---------|----------------------------------------|------------------------------------|
-| Member  | MemberID(PK),Name,MemberType,StartDate | Each member has unique ID          |
-| Program | ProgramID,ProgramName,Schedule         | Each members has multiple programs |
-| Trainer | TrainerName,Specialization             | Trainer is assigned to a program   |
-| Session | Duration,Date&Time,Status              | Program has seperate session       |
-| Attend  | Date,Status                            | Each session has attendance        |
-| Payment | PaymentID,Status                       | Member has to pay their fees       |
+| Entity     | Attributes (PK, FK)                                       | Notes                                                 |
+| ---------- | --------------------------------------------------------- | ----------------------------------------------------- |
+| Member     | MemberID (PK), Name, MembershipType, StartDate            | Each member has unique ID                             |
+| Program    | ProgramID (PK), ProgramName, Duration                     | Each program can have multiple trainers and members   |
+| Trainer    | TrainerID (PK), Name, Specialization, ContactInfo         | Trainers can be assigned to multiple programs         |
+| Session    | SessionID (PK), Date, Time, MemberID (FK), TrainerID (FK) | Represents booked sessions between member and trainer |
+| Attendance | AttendanceID (PK), SessionID (FK), MemberID (FK), Status  | Resolves M:N between Member and Session               |
+| Payment    | PaymentID (PK), MemberID (FK), Amount, Date, Type         | Tracks payments for memberships or sessions           |
 
 ### Relationships and Constraints
 
@@ -49,12 +49,17 @@ FlexiFit Gym wants a database to manage its members, trainers, and fitness progr
 
 
 ### Assumptions
+Each member has a unique member_id.
+
+Programs are predefined (Yoga, Zumba, Weight Training).
 
 A member can join the same program only once at a time.
 
 Each personal training session is handled by only one trainer.
 
 Attendance is mandatory for every booked personal training session.
+
+Payments include both membership fees and personal training session fees.
 
 ---
 
@@ -72,33 +77,47 @@ The Central Library wants to manage book lending and cultural events.
 - Overdue fines apply for late returns.
 
 ### ER Diagram:
+<img width="745" height="569" alt="image" src="https://github.com/user-attachments/assets/67b98726-b411-4ad8-b8a8-6c8ef703c8b8" />
 
-<img width="821" height="1101" alt="image" src="https://github.com/user-attachments/assets/1ef7e48d-745f-45d7-bb45-2f77e31f111b" />
 
 ### Entities and Attributes
-
-| Entity        |         Attributes (PK, FK)         |                      Notes                           |
-|---------------|-------------------------------------|------------------------------------------------------|
-| Customer      | CustomerID(PK),Name,PhoneNumber     | Customer can reserve to eat                          |
-| Reservation   | ReservationID(PK),status            | Reservation are made by the customer                 |
-| Order         | OrderID(PK),Date&Time,Status        | Order are made by the customer after reservation     |
-| Billing       | BillID(PK),PayMethod,TotAmt,Datetime| Bill Has to be paid by the customer                  |
-| Waiter        | WaiterID(PK),Name,Salary            |  Serves the food to customer                         |
-| Dishes        | Quantity,Price                      | Dishes are made by chief                             |
-
+| Entity            | Attributes (PK, FK)                                                       | Notes                                           |
+| ----------------- | ------------------------------------------------------------------------- | ----------------------------------------------- |
+| Member            | MemberID (PK), Name, Address, Phone                                       | Each member has a unique ID                     |
+| Book              | BookID (PK), ISBN, Title, Author, Category                                | A book can be borrowed multiple times           |
+| Loan              | LoanID (PK), LoanDate, ReturnDate, FineAmount, MemberID (FK), BookID (FK) | Resolves M:N between Member and Book            |
+| Event             | EventID (PK), Title, Description, Date, Time, RoomID (FK)                 | Each event occurs in one room                   |
+| EventRegistration | RegistrationID (PK), RegistrationDate, MemberID (FK), EventID (FK)        | Resolves M:N between Member and Event           |
+| Speaker           | SpeakerID (PK), Name, Expertise                                           | Each speaker may participate in multiple events |
+| Room              | RoomID (PK), RoomName, Type, Capacity                                     | Each event is assigned to one room              |
 
 ### Relationships and Constraints
-
-| Relationship | Cardinality | Participation | Notes |
-|--------------|------------|---------------|-------|
-|              |            |               |       |
-|              |            |               |       |
-|              |            |               |       |
+| Relationship                       | Cardinality                          | Participation                   | Notes                                 |
+| ---------------------------------- | ------------------------------------ | ------------------------------- | ------------------------------------- |
+| Member – Loan                      | 1:N                                  | Total on Loan side              | Each loan belongs to one member       |
+| Loan – Book                        | N:1                                  | Total on Loan side              | Each loan involves one book           |
+| Member – Book (via Loan)           | M:N (resolved via Loan)              | Total via Loan                  | Many members can borrow many books    |
+| Member – EventRegistration – Event | M:N (resolved via EventRegistration) | Total on EventRegistration side | Members register for multiple events  |
+| Event – Speaker                    | M:N                                  | Partial on both sides           | Events can have multiple speakers     |
+| Event – Room                       | 1:N                                  | Total on Event side             | Each event occurs in exactly one room |
+| Room – Event                       | 1:N                                  | Partial on Room side            | A room can host multiple events       |
 
 ### Assumptions
-- 
-- 
-- 
+Each member is uniquely registered.
+
+A member can borrow many books; each loan is for one book.
+
+A book can be loaned many times, but only once at a time.
+
+Loan stores start and return dates.
+
+Fine is generated only for late returns (one fine per loan).
+
+Events can have many speakers and many members.
+
+Each event is booked in one room; rooms can host many events.
+
+Members can attend multiple events.
 
 ---
 
@@ -116,19 +135,22 @@ A popular restaurant wants to manage reservations, orders, and billing.
 - Waiters assigned to serve reservations.
 
 ### ER Diagram:
+<img width="647" height="659" alt="image" src="https://github.com/user-attachments/assets/8d1c5519-ab94-4dc9-8722-a6985e79cffc" />
 
-<img width="1222" height="849" alt="Screenshot 2026-02-13 105139" src="https://github.com/user-attachments/assets/be7bbdd4-489a-4e12-a20d-af8c4ba4ae21" />
 
 ### Entities and Attributes
 
-| Entity        |         Attributes (PK, FK)         |                      Notes                           |
-|---------------|-------------------------------------|------------------------------------------------------|
-| Customer      | CustomerID(PK),Name,PhoneNumber     | Customer can reserve to eat                          |
-| Reservation   | ReservationID(PK),status            | Reservation are made by the customer                 |
-| Order         | OrderID(PK),Date&Time,Status        | Order are made by the customer after reservation     |
-| Billing       | BillID(PK),PayMethod,TotAmt,Datetime| Bill Has to be paid by the customer                  |
-| Waiter        | WaiterID(PK),Name,Salary            |  Serves the food to customer                         |
-| Dishes        | Quantity,Price                      | Dishes are made by chief                             |
+| Entity      | Attributes (PK, FK)                                                                      | Notes                                        |
+| ----------- | ---------------------------------------------------------------------------------------- | -------------------------------------------- |
+| Customer    | CustomerID (PK), Name, PhoneNo, Email                                                    | Each customer can make multiple reservations |
+| Table       | TableID (PK), Capacity, Location                                                         | Each table can be reserved multiple times    |
+| Reservation | ReservationID (PK), Date, Time, NoOfGuests, CustomerID (FK), TableID (FK), WaiterID (FK) | Represents table booking by a customer       |
+| Waiter      | WaiterID (PK), Name, Phone                                                               | A waiter serves multiple reservations        |
+| Order       | OrderID (PK), OrderTime, ReservationID (FK), CustomerID (FK)                             | Orders are linked to reservations            |
+| Dish        | DishID (PK), DishName, Category, Price                                                   | Each dish belongs to a specific category     |
+| OrderDetail | OrderID (PK, FK), DishID (PK, FK), Quantity                                              | Resolves M:N between Order and Dish          |
+| Bill        | BillID (PK), ReservationID (FK), Amount, ServiceCharge                                   | One bill per reservation                     |
+
 
 ### Relationships and Constraints
 
@@ -142,7 +164,6 @@ A popular restaurant wants to manage reservations, orders, and billing.
 | Reservation – Bill             | 1:1                            | Total on both sides       | One bill per reservation                   |
 
 ### Assumptions
-
 Each Customer is uniquely identified by Customer_ID.
 
 A customer can place multiple orders, but each order belongs to one customer.
