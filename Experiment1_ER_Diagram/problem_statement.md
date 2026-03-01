@@ -27,26 +27,34 @@ FlexiFit Gym wants a database to manage its members, trainers, and fitness progr
 
 ### Entities and Attributes
 
-| Entity | Attributes (PK, FK) | Notes |
-|--------|--------------------|-------|
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
+| Entity  |           Attributes (PK, FK)          |              Notes                 |
+|---------|----------------------------------------|------------------------------------|
+| Member  | MemberID(PK),Name,MemberType,StartDate | Each member has unique ID          |
+| Program | ProgramID,ProgramName,Schedule         | Each members has multiple programs |
+| Trainer | TrainerName,Specialization             | Trainer is assigned to a program   |
+| Session | Duration,Date&Time,Status              | Program has seperate session       |
+| Attend  | Date,Status                            | Each session has attendance        |
+| Payment | PaymentID,Status                       | Member has to pay their fees       |
 
 ### Relationships and Constraints
 
-| Relationship | Cardinality | Participation | Notes |
-|--------------|------------|---------------|-------|
-|              |            |               |       |
-|              |            |               |       |
-|              |            |               |       |
+| Relationship                  | Cardinality                   | Participation            | Notes                                                 |
+| ----------------------------- | ----------------------------- | ------------------------ | ----------------------------------------------------- |
+| Member – Payment              | 1:N                           | Total on Payment side    | One member can make multiple payments                 |
+| Member – Session              | 1:N                           | Total on Session side    | One member can book multiple sessions                 |
+| Trainer – Session             | 1:N                           | Total on Session side    | One trainer can handle many sessions                  |
+| Member – Attendance – Session | M:N (resolved via Attendance) | Total on Attendance side | Attendance connects members and sessions              |
+| Trainer – Program             | M:N                           | Partial on both sides    | Trainers can conduct multiple programs and vice versa |
+| Member – Program              | M:N                           | Partial on both sides    | Members can join multiple programs                    |
+
 
 ### Assumptions
-- 
-- 
-- 
+
+A member can join the same program only once at a time.
+
+Each personal training session is handled by only one trainer.
+
+Attendance is mandatory for every booked personal training session.
 
 ---
 
@@ -64,8 +72,8 @@ The Central Library wants to manage book lending and cultural events.
 - Overdue fines apply for late returns.
 
 ### ER Diagram:
-*Paste or attach your diagram here*  
-![ER Diagram](er_diagram_library.png)
+
+<img width="1072" height="821" alt="WSQ1 drawio" src="https://github.com/user-attachments/assets/dcc067b6-f0c2-4e70-bb5f-deffb1764e60" />
 
 ### Entities and Attributes
 
