@@ -46,124 +46,253 @@ Used to retrieve records from a table.
 SELECT column1, column2 FROM table_name WHERE condition;
 ```
 **Question 1**
---
--- Paste Question 1 here
+```
+Write a SQL query to Delete customers from 'customer' table where 'AGENT_CODE' is either 'A003' or 'A008'.
 
+ 
+Sample table: Customer
+
++-----------+-------------+-------------+--------------+--------------+-------+-------------+-------------+-------------+---------------+--------------+------------+  
+|CUST_CODE  | CUST_NAME   | CUST_CITY   | WORKING_AREA | CUST_COUNTRY | GRADE | OPENING_AMT | RECEIVE_AMT | PAYMENT_AMT |OUTSTANDING_AMT| PHONE_NO     | AGENT_CODE |
++-----------+-------------+-------------+--------------+--------------+-------+-------------+-------------+-------------+---------------+--------------+------------+
+| C00013    | Holmes      | London      | London       | UK           |     2 |     6000.00 |     5000.00 |     7000.00 |       4000.00 | BBBBBBB      | A003       |
+| C00001    | Micheal     | New York    | New York     | USA          |     2 |     3000.00 |     5000.00 |     2000.00 |       6000.00 | CCCCCCC      | A008       |
+| C00020    | Albert      | New York    | New York     | USA          |     3 |     5000.00 |     7000.00 |     6000.00 |       6000.00 | BBBBSBB      | A008       |
+```
+Code
 ```sql
--- Paste your SQL code below for Question 1
+DELETE FROM Customer
+WHERE AGENT_CODE = 'A003' OR AGENT_CODE = 'A008';
 ```
 
 **Output:**
 
-![Output1](output.png)
+<img width="1242" height="961" alt="image" src="https://github.com/user-attachments/assets/3af0ac5c-3a2f-4c3d-bf46-8e163ff5c828" />
 
 **Question 2**
----
--- Paste Question 2 here
+```
+Write a SQL statement to change salary of employee to 8000 whose Employee ID is 105, if the existing salary is less than 5000.
 
+
+Employees table
+
+---------------
+employee_id
+first_name
+last_name
+email
+phone_number
+hire_date
+job_id
+salary
+commission_pct
+manager_id
+department_id
+```
+Code
 ```sql
--- Paste your SQL code below for Question 2
+UPDATE Employees
+set salary = 8000
+where employee_id = 105 AND salary < 5000
 ```
 
 **Output:**
 
-![Output2](output.png)
+<img width="1237" height="327" alt="image" src="https://github.com/user-attachments/assets/7c9514e5-ce75-4d64-a92a-968d82ae2130" />
 
 **Question 3**
----
--- Paste Question 3 here
+```
+write a SQL query to find customers who are either from the city 'New York' or who do not have a grade greater than 100. Return customer_id, cust_name, city, grade, and salesman_id.
 
+Sample table: customer
+
+ customer_id |   cust_name    |    city    | grade | salesman_id 
+-------------+----------------+------------+-------+-------------
+        3002 | Nick Rimando   | New York   |   100 |        5001
+        3007 | Brad Davis     | New York   |   200 |        5001
+        3005 | Graham Zusi    | California |   200 |        5002
+```
+Code
 ```sql
--- Paste your SQL code below for Question 3
+SELECT customer_id,cust_name,city,grade,salesman_id from customer where city = 'New York' OR grade <= 100;
 ```
 
 **Output:**
 
-![Output3](output.png)
+<img width="1240" height="518" alt="image" src="https://github.com/user-attachments/assets/3874fb0d-b602-411f-a2c1-cc407587a32c" />
 
 **Question 4**
----
--- Paste Question 4 here
+```
+Write a SQL query to categorize value1 in the Calculations table as 'High' if it is greater than 50, otherwise 'Low'.
 
+cid         name        type        notnull     dflt_value  pk
+----------  ----------  ----------  ----------  ----------  ----------
+0           id          INTEGER     0                       1
+1           value1      REAL        0                       0
+2           value2      REAL        0                       0
+3           base        INTEGER     0                       0
+4           exponent    INTEGER     0                       0
+5           number      REAL        0                       0
+6           decimal     REAL        0                       0
+```
+Code
 ```sql
--- Paste your SQL code below for Question 4
+select id,value1,
+CASE 
+ when value1 < 50 then 'Low'
+ else 'High'
+ end as value_category
+ from Calculations;
+ 
 ```
 
 **Output:**
 
-![Output4](output.png)
+<img width="1240" height="384" alt="image" src="https://github.com/user-attachments/assets/2fef65f0-f556-4c4b-8b94-129d56e2cde6" />
 
 **Question 5**
----
--- Paste Question 5 here
+```
+Write a SQL query to remove rows from the table 'customer' with the following condition -
 
+1. 'cust_city' should begin with the letter 'L',
+
+Sample table: Customer
+
++-----------+-------------+-------------+--------------+--------------+-------+-------------+-------------+-------------+---------------+--------------+------------+  
+|CUST_CODE  | CUST_NAME   | CUST_CITY   | WORKING_AREA | CUST_COUNTRY | GRADE | OPENING_AMT | RECEIVE_AMT | PAYMENT_AMT |OUTSTANDING_AMT| PHONE_NO     | AGENT_CODE |
++-----------+-------------+-------------+--------------+--------------+-------+-------------+-------------+-------------+---------------+--------------+------------+
+| C00013    | Holmes      | London      | London       | UK           |     2 |     6000.00 |     5000.00 |     7000.00 |       4000.00 | BBBBBBB      | A003       |
+| C00001    | Micheal     | New York    | New York     | USA          |     2 |     3000.00 |     5000.00 |     2000.00 |       6000.00 | CCCCCCC      | A008       |
+| C00020    | Albert      | New York    | New York     | USA          |     3 |     5000.00 |     7000.00 |     6000.00 |       6000.00 | BBBBSBB      | A008       |
+```
+Code
 ```sql
--- Paste your SQL code below for Question 5
+DELETE FROM customer
+where cust_city like ('L%');
 ```
 
 **Output:**
 
-![Output5](output.png)
+<img width="1236" height="954" alt="image" src="https://github.com/user-attachments/assets/0476c9c5-6634-4ea6-8874-79e6eba300e6" />
 
 **Question 6**
----
--- Paste Question 6 here
+```
+Write a SQL query to Delete All Doctors with a NULL Specialization
 
+Sample table: Doctors
+
+attributes : doctor_id, first_name, last_name, specialization
+```
+Code
 ```sql
--- Paste your SQL code below for Question 6
+DELETE FROM Doctors
+WHERE specialization = '' OR specialization IS NULL;
 ```
 
 **Output:**
 
-![Output6](output.png)
+<img width="1234" height="951" alt="image" src="https://github.com/user-attachments/assets/e9e3b00d-d5a8-44cb-846a-223745d27b78" />
 
 **Question 7**
----
--- Paste Question 7 here
+```
+Write a SQL query to retrieve all employee names in lower case. 
 
+Table name: emp
+
+name        type
+----------  ----------
+empno       INT
+ename       VARCHAR(100)
+job         VARCHAR(50)
+mgr         INT
+hiredate    DATE
+sal         DECIMAL(10,2)
+comm        DECIMAL(10,2)
+deptno      INT
+```
+Code
 ```sql
--- Paste your SQL code below for Question 7
+SELECT LOWER(ename) as EmpName from emp;
 ```
 
 **Output:**
 
-![Output7](output.png)
+<img width="1240" height="641" alt="image" src="https://github.com/user-attachments/assets/843e1702-66a7-4d5c-ab42-9e78dcae41a4" />
 
 **Question 8**
----
--- Paste Question 8 here
+```
+write a SQL query to identify customers who do not belong to the city of 'New York' or have a grade value that exceeds 100. Return customer_id, cust_name, city, grade, and salesman_id.
 
+Sample table: customer
+
+ customer_id |   cust_name    |    city    | grade | salesman_id 
+-------------+----------------+------------+-------+-------------
+        3002 | Nick Rimando   | New York   |   100 |        5001
+        3007 | Brad Davis     | New York   |   200 |        5001
+        3005 | Graham Zusi    | California |   200 |        5002
+```
+Code
 ```sql
--- Paste your SQL code below for Question 8
+SELECT customer_id,cust_name,city,grade,salesman_id from customer
+where city <> 'New York' AND grade <= 100;
 ```
 
 **Output:**
 
-![Output8](output.png)
+<img width="1233" height="482" alt="image" src="https://github.com/user-attachments/assets/aa8daa0e-6719-44b6-ab66-f84c96959937" />
 
 **Question 9**
----
--- Paste Question 9 here
+```
+Write a SQL query to calculate the final price after applying both the discount and the tax. Return product_id, original_price, discount_percentage, tax_rate, and final_price.
 
+Sample table: Products
+
+product_id | original_price | discount_percentage | tax_rate
+
+ ------------+----------------+---------------------+--------- 
+
+101 | 50.00 | 0.10 | 0.08 
+
+102 | 75.00 | 0.15 | 0.05 
+
+103 | 100.00 | 0.20 | 0.10
+```
+Code
 ```sql
--- Paste your SQL code below for Question 9
+SELECT product_id,original_price,discount_percentage,tax_rate,
+(original_price * (1-discount_percentage)*(1+tax_rate)) as final_price from Products;
 ```
 
 **Output:**
 
-![Output9](output.png)
+<img width="1236" height="376" alt="image" src="https://github.com/user-attachments/assets/5af0b43e-8025-4e47-9899-ad6ee5767cff" />
 
 **Question 10**
----
--- Paste Question 10 here
+```
+ Write a SQL query to locate the details of customers with grade values above 100. Return customer_id, cust_name, city, grade, and salesman_id.
 
+Sample table: customer
+
+ customer_id |   cust_name    |    city    | grade | salesman_id
+
+-------------+----------------+------------+-------+-------------
+
+        3002 | Nick Rimando   | New York   |   100 |        5001
+
+        3007 | Brad Davis     | New York   |   200 |        5001
+
+        3005 | Graham Zusi    | California |   200 |        5002
+```
+Code
 ```sql
--- Paste your SQL code below for Question 10
+SELECT customer_id,cust_name,city,grade,salesman_id 
+from customer where grade > 100;
 ```
 
 **Output:**
 
-![Output10](output.png)
+<img width="1232" height="544" alt="image" src="https://github.com/user-attachments/assets/4d993247-1f94-43d5-8fe6-17e965be3a5d" />
+
 
 ## RESULT
 Thus, the SQL queries to implement DML commands have been executed successfully.
