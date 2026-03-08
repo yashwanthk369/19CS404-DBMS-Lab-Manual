@@ -37,124 +37,210 @@ HAVING condition;
 ```
 
 **Question 1**
---
--- Paste Question 1 here
+```
+Write a SQL query to  find the average salary of all employees?
 
+Table: employee
+
+name        type
+----------  ----------
+id          INTEGER
+name        TEXT
+age         INTEGER
+city        TEXT
+income      INTEGER
+```
+Code
 ```sql
--- Paste your SQL code below for Question 1
+SELECT avg(income) AS Average_Salary FROM employee
 ```
 
 **Output:**
 
-![Output1](output.png)
+<img width="1237" height="398" alt="image" src="https://github.com/user-attachments/assets/d4d532ad-430d-4913-a0e7-adadd51ce39a" />
 
 **Question 2**
----
--- Paste Question 2 here
+```
+Write a SQL query to count the number of customers. Return number of customers.
 
+Sample table: customer
+
+customer_id |   cust_name    |    city    | grade | salesman_id 
+
+-------------+----------------+------------+-------+-------------
+
+        3002 | Nick Rimando   | New York   |   100 |        5001
+
+        3007 | Brad Davis     | New York   |   200 |        5001
+
+        3005 | Graham Zusi    | California |   200 |        5002
+```
+Code
 ```sql
--- Paste your SQL code below for Question 2
+SELECT count(customer_id) AS COUNT FROM customer
 ```
 
 **Output:**
 
-![Output2](output.png)
+<img width="1237" height="405" alt="image" src="https://github.com/user-attachments/assets/39dc4052-6465-47e3-8ea2-3e2f67f491cb" />
 
 **Question 3**
----
--- Paste Question 3 here
+```
+Write a SQL query that counts the number of unique salespeople. Return number of salespeople.
 
+Sample table: orders
+
+ord_no      purch_amt   ord_date    customer_id  salesman_id
+
+----------  ----------  ----------  -----------  -----------
+
+70001       150.5       2012-10-05  3005         5002
+
+70009       270.65      2012-09-10  3001         5005
+
+70002       65.26       2012-10-05  3002         5001
+```
+Code
 ```sql
--- Paste your SQL code below for Question 3
+SELECT COUNT(DISTINCT salesman_id) AS COUNT FROM orders
 ```
 
 **Output:**
 
-![Output3](output.png)
+<img width="1240" height="400" alt="image" src="https://github.com/user-attachments/assets/a0e2f5e2-c10b-4809-bf06-8ea9193d552d" />
 
 **Question 4**
----
--- Paste Question 4 here
+```
+Write a SQL Query to find how many medications are prescribed for each patient?
 
+Sample table:MedicalRecords Table
+```
+Code
 ```sql
--- Paste your SQL code below for Question 4
+SELECT PatientID , count(Medications) AS AvgMedications FROM MedicalRecords group by PatientID
 ```
 
 **Output:**
 
-![Output4](output.png)
+<img width="1236" height="691" alt="image" src="https://github.com/user-attachments/assets/65126913-77c7-4eaf-8b87-08fa1cf38553" />
 
 **Question 5**
----
--- Paste Question 5 here
+```
+What is the average duration of insurance coverage for patients covered by each insurance company?
 
+Sample table:Insurance Table
+
+name               type
+-----------------  ----------
+InsuranceID        INTEGER
+PatientID          INTEGER
+InsuranceCompany   TEXT
+PolicyNumber       TEXT
+PolicyHolder       TEXT
+StartDate          DATE
+EndDate            DATE
+```
+Code
 ```sql
--- Paste your SQL code below for Question 5
+SELECT InsuranceCompany, AVG(EndDate - StartDate) AS AvgCoverageDurationDays FROM Insurance GROUP BY InsuranceCompany
 ```
 
 **Output:**
 
-![Output5](output.png)
+<img width="1241" height="770" alt="image" src="https://github.com/user-attachments/assets/b35874c1-b203-4da2-ae27-0a0ee206eaac" />
+
 
 **Question 6**
----
--- Paste Question 6 here
+```
+Write a SQL query to Calculate the average income of the employees with names starting with 'A': 
 
+Table: employee
+
+name        type
+----------  ----------
+id          INTEGER
+name        TEXT
+age         INTEGER
+city        TEXT
+income      INTEGER
+```
+Code
 ```sql
--- Paste your SQL code below for Question 6
+SELECT avg(income) AS avg_income FROM employee WHERE name LIKE ('A%');
 ```
 
 **Output:**
 
-![Output6](output.png)
+<img width="1239" height="399" alt="image" src="https://github.com/user-attachments/assets/60199b3f-4cd0-4128-a2d4-6ad255cb12c5" />
 
 **Question 7**
----
--- Paste Question 7 here
+```
+Write a SQL query to find the youngest employee in the company?
 
+Table: employee
+
+name        type
+----------  ----------
+id          INTEGER
+name        TEXT
+age         INTEGER
+city        TEXT
+income      INTEGER
+```
+Code
 ```sql
--- Paste your SQL code below for Question 7
+SELECT name AS Employee_Name , age AS Age FROM employee ORDER BY Age ASC LIMIT 1;
 ```
 
 **Output:**
 
-![Output7](output.png)
+<img width="1231" height="401" alt="image" src="https://github.com/user-attachments/assets/9834c63c-caae-4dd3-8792-04c781e649cb" />
 
 **Question 8**
----
--- Paste Question 8 here
+```
+Write a SQL query to identify the cities (addresses) where the average salary is greater than Rs. 5000, as per the "customer1" table.
 
+Sample table: customer1
+```
+Code
 ```sql
--- Paste your SQL code below for Question 8
+SELECT address,AVG(salary) FROM customer1 GROUP BY address HAVING salary > 5000
 ```
 
 **Output:**
 
-![Output8](output.png)
+<img width="1239" height="527" alt="image" src="https://github.com/user-attachments/assets/ec9c00cd-78ab-4dd0-8a9c-06b5c5e7ab9d" />
 
 **Question 9**
----
--- Paste Question 9 here
+```
+Write the SQL query that accomplishes the grouping of data by joining date (jdate), calculates the maximum work hours for each date, and excludes dates where the maximum work hour is not greater than 12.
 
+Sample table: employee1
+```
+Code
 ```sql
--- Paste your SQL code below for Question 9
+SELECT jdate,MAX(workhour) FROM employee1 GROUP BY jdate HAVING workhour > 12
 ```
 
 **Output:**
 
-![Output9](output.png)
+<img width="1239" height="470" alt="image" src="https://github.com/user-attachments/assets/4d88c4f1-1650-479a-891d-af7d37fe281a" />
 
 **Question 10**
----
--- Paste Question 10 here
+```
+Write the SQL query that achieves the grouping of data by age, calculates the minimum income for each age group, and includes only those age groups where the minimum income is less than 1,000,000.
 
+Sample table: employee
+```
+Code
 ```sql
--- Paste your SQL code below for Question 10
+SELECT age,MIN(income) as Income FROM employee GROUP BY age HAVING income < 1000000
 ```
 
 **Output:**
 
-![Output10](output.png)
+<img width="1236" height="525" alt="image" src="https://github.com/user-attachments/assets/502f47d0-60fc-4941-af8d-73323df0eadf" />
+
 
 
 ## RESULT
