@@ -47,8 +47,26 @@ Greater number is: 80
 - Use a `WHILE` loop to iterate from 1 to `n`, adding each number to the sum.
 - Display the result using `DBMS_OUTPUT.PUT_LINE`.
 
+### CODE
+
+```
+DECLARE
+   n NUMBER := &n;
+   sum NUMBER := 0;
+BEGIN
+    FOR i IN 1..n LOOP
+    sum := sum + i;
+    END LOOP;
+    DBMS_OUTPUT.PUT_LINE('Sum of first '||n|| 'natural numbers is: ' || sum);
+END;
+/
+```
+
 **Expected Output:**  
 Sum of first 10 natural numbers is: 55
+
+### OUTPUT 
+
 
 ---
 
